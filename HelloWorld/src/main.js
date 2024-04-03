@@ -14,9 +14,9 @@ import {
 const container = document.querySelector('#scene-container');
 
 const scene = new Scene();
-scene.background = new Color('skyblue');
+scene.background = new Color('#a494f2');
 
-const fov = 35; // AKA Field of View
+const fov = 43; // AKA Field of View
 const aspect = container.clientWidth / container.clientHeight;
 const near = 0.1; // the near clipping plane
 const far = 100; // the far clipping plane
@@ -24,11 +24,11 @@ const far = 100; // the far clipping plane
 const camera = new PerspectiveCamera(fov, aspect, near, far);
 // every object is initially created at ( 0, 0, 0 )
 // move the camera back so we can view the scene
-camera.position.set(0, 0, 10);
+camera.position.set(5, 2.1, 11);
 
-const length = 2;
-const width = 2;
-const depth = 2;
+const length = 1.5;
+const width = 2.4;
+const depth = 3;
 
 // create a geometry
 const geometry = new BoxGeometry(length, width, depth);
