@@ -1,7 +1,7 @@
 <script>
     import { onMount } from 'svelte';
     import {
-        BoxGeometry,
+        ConeGeometry,
         Color,
         Mesh,
         MeshBasicMaterial,
@@ -13,12 +13,12 @@
     let container;
     let scene;
     let camera;
-    let cube;
+    let cone;
 
     // This function will be called once the component and the DOM element are mounted
     onMount(() => {
         scene = new Scene();
-        scene.background = new Color('#a494f2');
+        scene.background = new Color('#483D8B');
 
         const fov = 43;
         const aspect = container.clientWidth / container.clientHeight;
@@ -32,11 +32,11 @@
         const width = 2.4;
         const depth = 3;
 
-        const geometry = new BoxGeometry(length, width, depth);
-        const material = new MeshBasicMaterial();
-        cube = new Mesh(geometry, material);
+        const geometry = new ConeGeometry(length, width, depth);
+        const material = new MeshBasicMaterial({ color: '#FF69B4' });
+        cone = new Mesh(geometry, material);
 
-        scene.add(cube);
+        scene.add(cone);
         const renderer = new WebGLRenderer();
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
