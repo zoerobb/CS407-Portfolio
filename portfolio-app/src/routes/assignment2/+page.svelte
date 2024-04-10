@@ -15,7 +15,6 @@
     let camera;
     let cone;
 
-    // This function will be called once the component and the DOM element are mounted
     onMount(() => {
         scene = new Scene();
         scene.background = new Color('#483D8B');
