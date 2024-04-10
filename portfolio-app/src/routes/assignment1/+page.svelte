@@ -43,7 +43,6 @@
         renderer.render(scene, camera);
     });
 </script>
-
 <head>
   <title>Discoverthreejs.com - The Structure of a three.js App</title>
 
@@ -58,10 +57,24 @@
 
   <div id="scene-container" bind:this={container}>
     <!-- Our <canvas> will be inserted here -->
+      <a href="/" class="escape" aria-label="Go back"></a>
   </div>
 </body>
 
 <style>
+  .escape {
+    position: absolute;
+    top: 11px;
+    left: 12px;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: url('/node_modules/bootstrap-icons/icons/arrow-left-circle.svg') no-repeat;
+    background-size: contain;
+    filter: invert(1);
+    z-index: 1000;
+  }
+
     body {
   /* remove margins and scroll bars */
   margin: 0;
