@@ -16,8 +16,12 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"a-color-picker": "^1.2.1",
 		"bootstrap": "^5.3.3",
 		"bootstrap-icons": "^1.11.3",
-		"three": "^0.163.0"
+		"nouislider": "^15.7.1",
+		"simple-color-picker": "^1.0.5",
+		"three": "^0.163.0",
+		"wnumb": "^1.2.0"
 	}
 }
