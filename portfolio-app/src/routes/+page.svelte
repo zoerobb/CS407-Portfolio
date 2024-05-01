@@ -28,6 +28,12 @@
                 <img src="/node_modules/bootstrap-icons/icons/arrow-bar-right.svg" alt="Arrow Icon" />
             </div>
         </a>
+        <a href="/assignment4" class="list-group-item list-group-item-action">
+            <div class="d-flex flex-column align-items-start animate">
+                <h5 class="mb-1">Assignment 4</h5>
+                <img src="/node_modules/bootstrap-icons/icons/arrow-bar-right.svg" alt="Arrow Icon" />
+            </div>
+        </a>
     </div>
 </div>
 
