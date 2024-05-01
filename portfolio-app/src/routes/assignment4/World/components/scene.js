@@ -1,9 +1,23 @@
-import { Color, Scene } from 'three';
+import { Color, Scene, CubeTextureLoader } from 'three';
 
-function createScene() {
+function createScene(renderer, camera) {
   const scene = new Scene();
 
-  scene.background = new Color('#000022');
+  // Load the skybox images
+  const loader = new CubeTextureLoader();
+  loader.load([
+    'px.png',
+    'nx.png',
+    'py.png',
+    'ny.png',
+    'pz.png', 
+    'nz.png',
+  ], (texture) => {
+    scene.background = texture;
+
+    renderer.render(scene, camera);
+
+  });
 
   return scene;
 }
