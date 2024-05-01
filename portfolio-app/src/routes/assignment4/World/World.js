@@ -99,14 +99,6 @@ class World {
     
         offset.applyQuaternion(camera.quaternion);
     
-    
-        const distance = this.sageHead.position.distanceTo(camera.position);
-
-        if (distance > this.controls.maxDistance) {
-            const direction = new THREE.Vector3().subVectors(camera.position, this.sageHead.position).normalize();
-            camera.position.copy(this.sageHead.position).add(direction.multiplyScalar(this.controls.maxDistance));
-        }
-
         this.controls.target.copy(this.sageHead.position);
         this.controls.update();
 
