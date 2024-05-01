@@ -27,6 +27,7 @@ class World {
         
 
         this.controls = new OrbitControls( camera, renderer.domElement );
+        this.controls.maxDistance = 20;
 
         //controls.update() must be called after any manual changes to the camera's transform
         camera.position.set(11, 4.5, 4 );
@@ -67,6 +68,12 @@ class World {
             this.sageBody.lookAt(lookAtPosition);
             this.sageTail.lookAt(lookAtPosition);
         });
+
+        window.addEventListener('keydown', (event) => {
+            if (event.code === 'Space') {
+                this.jump();
+            }
+        });
     }
 
     async init() {
@@ -85,10 +92,72 @@ class World {
 
     animate() {
         requestAnimationFrame(this.animate.bind(this));
+    
+        // Calculate the offset from the sageHead's position
+        const offset = new Vector3();
+        offset.set(0, 8, 15); // Offset values can be adjusted as needed
+    
+        offset.applyQuaternion(camera.quaternion);
+    
+    
+        const distance = this.sageHead.position.distanceTo(camera.position);
+
+        if (distance > this.controls.maxDistance) {
+            const direction = new THREE.Vector3().subVectors(camera.position, this.sageHead.position).normalize();
+            camera.position.copy(this.sageHead.position).add(direction.multiplyScalar(this.controls.maxDistance));
+        }
+
+        this.controls.target.copy(this.sageHead.position);
         this.controls.update();
+
         if (scene && camera) {
             renderer.render(scene, camera);
         }
+    }
+
+    jump() {
+        if (this.isJumping) {
+            return;
+        }
+    
+        this.isJumping = true;
+    
+        // Animate the jump
+        const jumpHeight = 7;
+        const jumpDuration = 300;
+        const initialPosition = this.sageHead.position.y;
+    
+        let startTime = null;
+    
+        const animateJump = (timestamp) => {
+            if (!startTime) {
+                startTime = timestamp;
+            }
+    
+            const elapsedTime = timestamp - startTime;
+            const progress = elapsedTime / jumpDuration;
+    
+            if (progress < 0.5) {
+                this.sageHead.position.y = initialPosition + progress * 2 * jumpHeight;
+                this.sageBody.position.y = initialPosition + progress * 2 * jumpHeight;
+                this.sageTail.position.y = initialPosition + progress * 2 * jumpHeight;
+            } else {
+                this.sageHead.position.y = initialPosition + (1 - progress) * 2 * jumpHeight;
+                this.sageBody.position.y = initialPosition + (1 - progress) * 2 * jumpHeight;
+                this.sageTail.position.y = initialPosition + (1 - progress) * 2 * jumpHeight;
+            }
+    
+            if (progress < 1) {
+                requestAnimationFrame(animateJump);
+            } else {
+                this.sageHead.position.y = initialPosition;
+                this.sageBody.position.y = initialPosition;
+                this.sageTail.position.y = initialPosition;
+                this.isJumping = false;
+            }
+        };
+    
+        requestAnimationFrame(animateJump);
     }
 
 }
