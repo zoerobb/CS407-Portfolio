@@ -1,15 +1,18 @@
-import { PlaneGeometry, MeshBasicMaterial, Mesh } from 'three';
+import { PlaneGeometry, MeshStandardMaterial, Mesh, TextureLoader } from 'three';
 
 function createFloor() {
-  const geometry = new PlaneGeometry(100, 100, 10, 10);
+    const textureLoader = new TextureLoader();
+    const rockTexture = textureLoader.load('rock.avif');
 
-  const material = new MeshBasicMaterial({ color: 0x000020 });
+    const geometry = new PlaneGeometry(100, 100);
 
-  const floor = new Mesh(geometry, material);
+    const material = new MeshStandardMaterial({ map: rockTexture });
 
-  floor.rotation.x = -Math.PI / 2;
+    const plane = new Mesh(geometry, material);
 
-  return floor;
+    plane.rotation.x = -Math.PI / 2;
+
+    return plane;
 }
 
 export { createFloor };
