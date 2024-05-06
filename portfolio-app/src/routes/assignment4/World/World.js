@@ -16,7 +16,7 @@ import { WaterGunControls } from './components/watergun/waterguncontrols.js';
 let camera;
 let renderer;
 let scene;
-let waterGunStatus = false;
+let waterGunStatus = true;
 
 class World {
     constructor(container) {
