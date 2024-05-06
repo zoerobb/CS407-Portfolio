@@ -10,6 +10,8 @@ import { CharacterControls } from './components/sage/charactercontrols.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createOcean } from './components/ocean.js';
 import { createMoon } from './components/moon.js';
+import { loadWaterGun } from './components/watergun/watergun.js';
+import { WaterGunControls } from './components/watergun/waterguncontrols.js';
 
 let camera;
 let renderer;
@@ -21,6 +23,7 @@ class World {
         this.sageBody = null;
         this.sageTail = null;
         this.sage = null;
+        this.waterGun = null;
         camera = createCamera();
         renderer = createRenderer();
         scene = createScene(renderer, camera);
@@ -37,6 +40,7 @@ class World {
 
         const resizer = new Resizer(container, camera, renderer);
         this.characterControls = null;
+        this.waterGunControls = null;
         this.controls = new OrbitControls(camera, renderer.domElement);
     }
 
@@ -46,13 +50,18 @@ class World {
             throw new Error('Sage is undefined');
         }
 
+        const { waterGun } = await loadWaterGun();
+        this.waterGun = waterGun;
+        const sageBullet = sage.clone();
+        this.waterGunControls = new WaterGunControls(waterGun, sageBullet);
         this.sage = sage;
-
+        this.sage.add(waterGun);
         scene.add(sage);
         const AXIS_Y = new Vector3(0, 1, 0);
         this.characterControls = new CharacterControls(sage, camera, AXIS_Y);
-
         this.controls.target = this.characterControls.dummyCamera.position;
+
+        
     }
     
     render() {
@@ -68,11 +77,15 @@ class World {
                 this.controls.target.y = 0;
             }
         }
+        if (this.waterGunControls) {
+            this.waterGunControls.shoot();
+        }
     }
 
     animate() {
         requestAnimationFrame(() => this.animate());
         this.update();
+        this.waterGunControls.update();
         this.controls.update();
         renderer.render(scene, camera);
     }

@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="title">
-                        <h1><center>Sage</center></h1>
+                        <h1><center>Hierarchical Scene & Transformations with Animation</center></h1>
                         <hr />
                     </div>
                 </div>
@@ -39,7 +39,19 @@
                 </div>
                 <div class="col-md-1">
                     <div class="information">
-                       <p>add</p>
+                       <p>The goal of this assignment is to create a simple scene using a hierarchical scene graph as shown in Transformations, Coordinate Systems,
+                        and the Scene Graph in the Discover three.js book.
+                       </p>
+                       <p>Requirements are:</p>
+                          <ul>
+                            <li>Construct a compound model composed of a primary object and multiple child objects.</li>
+                            <li>Place those child objects relative to the parent using transformations, at least one of which we create 
+                                manually using vector or matrix algebra
+                            </li>
+                            <li>Have interactivity that moves both the entire object as well as the children</li>
+                        </ul>
+                        <p>For the axes: X (red), Y (green) and Z (blue)</p>
+                        <p>Keyboard controls: WASD to move the fox. Space to jump. Only works if the canvas element has focus. Click it if key presses doesn't do anything.</p>
                     </div>
                 </div>
             </div>

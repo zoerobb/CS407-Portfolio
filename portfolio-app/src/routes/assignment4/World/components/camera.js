@@ -4,7 +4,7 @@ function createCamera() {
   const camera = new PerspectiveCamera(
   );
 
-  camera.position.set(0, 0, 0);
+  camera.position.set(0, 2, 6);
 
   return camera;
 }
