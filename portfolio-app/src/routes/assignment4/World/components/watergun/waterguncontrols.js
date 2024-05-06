@@ -11,29 +11,44 @@ class WaterGunControls {
         }
         this.waterGun = waterGun;
         this.keys = {
-            E: false
+            e: false,
+            ArrowUp: false,
+            ArrowDown: false
         };
         this.bulletModel = bulletModel;
         this.maxDistance = 10;
         this.bullets = [];
+        this.currentUpRotation = 0;
+        this.currentDownRotation = 0;
 
         window.addEventListener('keydown', (event) => {
-            const key = event.key.toUpperCase();
+            const key = event.key;
             if (key in this.keys) {
+                event.preventDefault();
                 this.keys[key] = true;
             }
         });
         
         window.addEventListener('keyup', (event) => {
-            const key = event.key.toUpperCase();
+            const key = event.key;
             if (key in this.keys) {
+                event.preventDefault();
                 this.keys[key] = false;
             }
         });
     }
 
+    moveGun() {
+        if (this.keys.ArrowUp) {
+            this.waterGun.rotation.x -= 0.05;
+        }
+        if (this.keys.ArrowDown) {
+            this.waterGun.rotation.x += 0.05;
+        }
+    }
+
     shoot() {
-        if (this.keys.E) {
+        if (this.keys.e) {
             const bullet = this.bulletModel.clone();
             bullet.scale.set(0.2, 0.2, 0.2);
             bullet.position.set(-0.08, 0.05, 0.4);
@@ -48,7 +63,7 @@ class WaterGunControls {
                 initialPosition: bullet.position.clone()
             });
 
-            this.keys.E = false;
+            this.keys.e = false;
         }
     }
 

@@ -6,6 +6,7 @@
     let world;
     let isAnimating = false;
     let isLighting = true;
+    let hasWaterGun = false;
     
     onMount(async () => {
         world = new World(container);
@@ -29,15 +30,21 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <div class="buttons">
+                        <p>Controls:</p>
+                        <p>WASD - Move</p>
+                        <p>Space - Jump</p>
+                        <p>E - Shoot</p>
+                        <p>Arrows - Rotate Water Gun</p>
+                        <button class="btn btn-primary" on:click={() => hasWaterGun = world.GiveSageWaterGun(hasWaterGun)}>{hasWaterGun ? 'Give Weapon' : 'Remove Weapon'}</button>
                     </div>
                 </div>
-                <div class="col-md-10">
+                <div class="col-md-8">
                     <div class="scene" id="scene-container" bind:this={container}>
                     </div>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <div class="information">
                        <p>The goal of this assignment is to create a simple scene using a hierarchical scene graph as shown in Transformations, Coordinate Systems,
                         and the Scene Graph in the Discover three.js book.
@@ -51,7 +58,6 @@
                             <li>Have interactivity that moves both the entire object as well as the children</li>
                         </ul>
                         <p>For the axes: X (red), Y (green) and Z (blue)</p>
-                        <p>Keyboard controls: WASD to move the fox. Space to jump. Only works if the canvas element has focus. Click it if key presses doesn't do anything.</p>
                     </div>
                 </div>
             </div>
@@ -93,6 +99,11 @@
     -1px 1px 0 #0976f3;
     }
 
+    p, li {
+        text-shadow: none;
+        color: rgb(190, 202, 255);
+    }
+
     @keyframes gradient {
         0% {background-position: 0% 60%;}
         50% {background-position: 0% 0%;}
@@ -119,7 +130,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
         height: 100%;
     }
     

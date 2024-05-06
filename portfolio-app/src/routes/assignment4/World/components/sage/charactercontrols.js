@@ -30,6 +30,7 @@ class CharacterControls {
         window.addEventListener('keydown', (event) => {
             const key = event.key.toUpperCase();
             if (key in this.keys) {
+                event.preventDefault();
                 this.keys[key] = true;
             }
         });
@@ -37,6 +38,7 @@ class CharacterControls {
         window.addEventListener('keyup', (event) => {
             const key = event.key.toUpperCase();
             if (key in this.keys) {
+                event.preventDefault();
                 this.keys[key] = false;
             }
         });

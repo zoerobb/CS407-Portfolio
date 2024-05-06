@@ -16,6 +16,7 @@ import { WaterGunControls } from './components/watergun/waterguncontrols.js';
 let camera;
 let renderer;
 let scene;
+let waterGunStatus = false;
 
 class World {
     constructor(container) {
@@ -77,8 +78,9 @@ class World {
                 this.controls.target.y = 0;
             }
         }
-        if (this.waterGunControls) {
+        if (this.waterGunControls && waterGunStatus) {
             this.waterGunControls.shoot();
+            this.waterGunControls.moveGun();
         }
     }
 
@@ -88,6 +90,18 @@ class World {
         this.waterGunControls.update();
         this.controls.update();
         renderer.render(scene, camera);
+    }
+
+    GiveSageWaterGun(hasWaterGun) {
+        if (hasWaterGun) {
+            this.sage.add(this.waterGun);
+            waterGunStatus = true;
+            return false;
+        } else {
+            this.sage.remove(this.waterGun);
+            waterGunStatus = false;
+            return true;
+        }
     }
 }
     
