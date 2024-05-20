@@ -57,7 +57,6 @@
                             </li>
                             <li>Have interactivity that moves both the entire object as well as the children</li>
                         </ul>
-                        <p>For the axes: X (red), Y (green) and Z (blue)</p>
                     </div>
                 </div>
             </div>
