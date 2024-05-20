@@ -19,6 +19,7 @@ class World {
         scene = createScene();
         renderer = createRenderer();
         container.append(renderer.domElement);
+        camera.position.set(0, 25, 25);
 
         this.controls = createControls(camera, renderer.domElement);
 
@@ -39,8 +40,9 @@ class World {
 
     animate() {
         requestAnimationFrame(() => this.animate());
+        this.customShape.initialRotation = this.customShape.rotation.z;
         if (isAnimating) {
-            this.customShape.rotation.y += 0.002;
+            this.customShape.rotation.z += 0.006;
         }
         this.controls.update();
         renderer.render(scene, camera);
