@@ -2,6 +2,7 @@ import { createCamera } from './components/camera.js';
 import { createScene } from './components/scene.js';
 import { createCustomShape } from './components/customShape.js';
 import { createAmbientLight } from './components/lights.js';
+import { createDirectionalLight } from './components/lights.js';
 import { createRenderer } from './systems/renderer.js';
 import { Resizer } from './systems/Resizer.js';
 import { createControls } from './systems/controls.js';
@@ -25,11 +26,12 @@ class World {
 
         this.customShape = createCustomShape();
         this.ambientLight = createAmbientLight();
+        this.directionalLight = createDirectionalLight();
 
         const axesHelper = new AxesHelper(5);
         scene.add(axesHelper);
 
-        scene.add(this.customShape, this.ambientLight);
+        scene.add(this.customShape, this.ambientLight, this.directionalLight);
 
         const resizer = new Resizer(container, camera, renderer);
     }
