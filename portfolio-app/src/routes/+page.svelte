@@ -43,12 +43,12 @@
                 <h3>Assignment 6</h3>
             </div>
         </a>
-        <a href="/assignment6" class="assignment-card">
+        <a href="/assignment7" class="assignment-card">
             <div class="animate">
                 <h3>Assignment 7</h3>
             </div>
         </a>
-        <a href="/assignment6" class="assignment-card">
+        <a href="/final" class="assignment-card">
             <div class="animate">
                 <h3>Final</h3>
             </div>
