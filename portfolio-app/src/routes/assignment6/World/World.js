@@ -42,7 +42,6 @@ class World {
         this.animations = animations;
         scene.add(dragon);
 
-        const AXIS_Y = new Vector3(0, 1, 0);
         this.characterControls = new CharacterControls(this.dragon, this.animations);
         this.characterControls.idle();
     }

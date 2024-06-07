@@ -8,19 +8,16 @@ class CharacterControls {
         this.mixer = new AnimationMixer(this.dragon);
         this.animations = animations;
         this.idleAction = null;
-        this.dieAnimationTime = 18;
-        this.downAnimationTime = 25;
-        this.upAnimationTime = 130;
+        this.dieAnimationTime = 19;
         this.turnLeftAnimationTime = 127.5;
         this.turnRightAnimationTime = 128.5;
-        this.idleAnimationTime = 120;
-        this.finished = false;
+        this.idleAnimationTime = 118;
+        this.animationRunning = false;
 
         this.keys = {
             A: false,
             D: false,
-            K: false,
-            SPACE: false
+            K: false
         };
 
         window.addEventListener('keydown', (event) => {
@@ -34,9 +31,6 @@ class CharacterControls {
             if (event.key.toUpperCase() === 'D') {
                 this.turnRight();
             }
-            if (event.key.toUpperCase() === 'SPACE') {
-                this.jump();
-            }
         });
 
         window.addEventListener('keyup', (event) => {
@@ -45,71 +39,77 @@ class CharacterControls {
     }
 
     die() {
+        this.animationRunning = true;
         this.idleAction.stop();
+        if(this.dieAction) {
+            this.dieAction.stop();
+        }
         this.dieAnimation = AnimationClip.findByName(this.animations, 'Qishilong_die');
         this.dieAction = this.mixer.clipAction(this.dieAnimation);
-        this.dieAction.time = 18;
+        this.dieAction.time = this.dieAnimationTime;
         this.dieAction.setLoop(LoopOnce);
-        this.dieAction.clampWhenFinished = true;
         this.dieAction.play();
-        this.finished = true;
+        this.mixer.addEventListener('finished', () => {
+            if (this.animationRunning) {
+                this.idle();
+                this.animationRunning = false;
+            }
+        });
     }
-
+    
     idle() {
         this.idleAnimation = AnimationClip.findByName(this.animations, 'Qishilong_stand');
         this.idleAction = this.mixer.clipAction(this.idleAnimation);
         this.idleAction.time = this.idleAnimationTime;
         this.idleAction.play();
     }
-
+    
     turnLeft() {
+        this.animationRunning = true;
         this.idleAction.stop();
+        if(this.turnLeftAction) {
+            this.turnLeftAction.stop();
+        }
         this.turnLeftAnimation = AnimationClip.findByName(this.animations, 'Qishilong_turnleft');
         this.turnLeftAction = this.mixer.clipAction(this.turnLeftAnimation);
         this.turnLeftAction.time = this.turnLeftAnimationTime;
         this.turnLeftAction.setLoop(LoopOnce);
-        this.turnLeftAction.clampWhenFinished = true;
         this.turnLeftAction.play();
+        this.mixer.addEventListener('finished', () => {
+            if (this.animationRunning) {
+                this.idle();
+                this.animationRunning = false;
+            }
+        });
     }
-
+    
     turnRight() {
+        this.animationRunning = true;
         this.idleAction.stop();
+        if(this.turnRightAction) {
+            this.turnRightAction.stop();
+        }
         this.turnRightAnimation = AnimationClip.findByName(this.animations, 'Qishilong_turnright');
         this.turnRightAction = this.mixer.clipAction(this.turnRightAnimation);
         this.turnRightAction.time = this.turnRightAnimationTime;
         this.turnRightAction.setLoop(LoopOnce);
-        this.turnRightAction.clampWhenFinished = true;
         this.turnRightAction.play();
-    }
-
-    jump() {
-        this.idleAction.stop();
-        this.downAnimation = AnimationClip.findByName(this.animations, 'Qishilong_down');
-        this.downAction = this.mixer.clipAction(this.downAnimation);
-        this.downAction.time = this.downAnimationTime;
-        this.downAction.setLoop(LoopOnce);
-        this.downAction.clampWhenFinished = true;
-        this.downAction.play();
-        this.upAnimation = AnimationClip.findByName(this.animations, 'Qishilong_up');
-        this.upAction = this.mixer.clipAction(this.upAnimation);
-        this.upAction.time = this.upAnimationTime;
-        this.upAction.setLoop(LoopOnce);
-        this.upAction.clampWhenFinished = true;
-        this.upAction.play();
+        this.mixer.addEventListener('finished', () => {
+            if (this.animationRunning) {
+                this.idle();
+                this.animationRunning = false;
+            }
+        });
     }
 
 
     update(delta) {
         this.mixer.update(delta);
-        if (this.idleAction && this.idleAction.time < this.idleAnimationTime) {
+
+        if (!this.animationRunning && this.idleAction.isRunning() && this.idleAction.time < this.idleAnimationTime) {
             this.idleAction.stop();
             this.idleAction.time = this.idleAnimationTime;
             this.idleAction.play();
-        }
-
-        if (this.dieAction && !this.dieAction.isRunning() && this.idleAction.paused) {
-            this.idleAction.play();
-            this.finished = false;
         }
     }
 }
