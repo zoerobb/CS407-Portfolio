@@ -58,6 +58,7 @@
                             <li>Use per-vertex colors so we can pass custom attribute data to the vertex shader</li>
                             <li>Implement orbit and optionally camera navigation through the scene</li>
                         </ul>
+                        <p>For the axes: X (red), Y (green) and Z (blue)</p>
                     </div>
                 </div>
             </div>

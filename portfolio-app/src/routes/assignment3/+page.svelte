@@ -87,7 +87,7 @@ function toggleLightingColor() {
         <div class="row">
             <div class="col-12">
                 <div class="title">
-                    <h1><center>Hello World using three.js</center></h1>
+                    <h1><center>Hello World App & Lighting</center></h1>
                     <hr />
                 </div>
             </div>
