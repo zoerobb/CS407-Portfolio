@@ -55,8 +55,8 @@
                 <p>Controls</p>
                 <hr/>
                 <ul>
-                    <li>WASD: Move</li>
-                    <li>SPACE: Jump</li>
+                    <li>A, D: Turn left and right</li>
+                    <li>K: Die</li>
                     <li>MOUSE BUTTONS + DRAG: Adjust camera</li>
                     <li>MOUSE WHEEL: Zoom camera</li>
                 </ul>

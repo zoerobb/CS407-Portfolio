@@ -7,8 +7,8 @@ async function loadDragon() {
     const dragonData = await loader.loadAsync('dragon.glb');
 
     const dragon = setupModel(dragonData);
-    dragon.scale.set(0.25, 0.25, 0.25);
-    return { dragon }
+    dragon.scale.set(0.25, 0.25, 0.25);65
+    return { dragon, animations: dragonData.animations}
 }
 
 export { loadDragon };

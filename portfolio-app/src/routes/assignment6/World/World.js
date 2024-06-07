@@ -8,20 +8,24 @@ import { CharacterControls } from './components/dragon/charactercontrols.js';
 import { Vector3 } from 'three';
 import { createLights } from './components/lights.js';
 import { createFloor } from './components/floor.js';
+import { Clock } from 'three';
 
 let camera;
 let renderer;
 let scene;
 
+
 class World {
     constructor(container) {
         this.dragon = null;
+        this.animations = null;
         this.characterControls = null;
         camera = createCamera();
         scene = createScene();
         renderer = createRenderer();
         container.append(renderer.domElement);
-
+        camera.position.set(20, 10, 22);
+        this.clock = new Clock();
         this.controls = createControls(camera, renderer.domElement);
         this.lights = createLights();
         const { floor, grid } = createFloor();
@@ -33,11 +37,14 @@ class World {
     }
 
     async init() {
-        const { dragon } = await loadDragon();
+        const { dragon, animations } = await loadDragon();
         this.dragon = dragon;
+        this.animations = animations;
         scene.add(dragon);
+
         const AXIS_Y = new Vector3(0, 1, 0);
-        this.characterControls = new CharacterControls(dragon, camera, AXIS_Y);
+        this.characterControls = new CharacterControls(this.dragon, this.animations);
+        this.characterControls.idle();
     }
     
     render() {
@@ -45,14 +52,9 @@ class World {
     }
 
     update() {
+        const delta = this.clock.getDelta();
         if (this.characterControls) {
-            this.characterControls.move();
-            if (this.dragon) {
-                this.controls.target.copy(this.dragon.position);
-            }
-            if (this.controls.target.y < 0) {
-                this.controls.target.y = 0;
-            }
+            this.characterControls.update(delta);
         }
     }
 
@@ -60,7 +62,7 @@ class World {
         requestAnimationFrame(() => this.animate());
         this.update();
         this.controls.update();
-        renderer.render(scene, camera);
+        this.render();
     }
 }
     
