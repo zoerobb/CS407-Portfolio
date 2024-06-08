@@ -4,21 +4,22 @@ import { MeshBasicMaterial } from "three";
 import { Group } from "three";
 
 function createParticles() {
-    const particleCount = 4000;
-    //#25C7FF, #2820FB, #9B20FB, #FB20ED, #FB2080, #20F6FB
+    const particleCount = 1000;
     const colors = [0x25C7FF, 0x2820FB, 0x9B20FB, 0xFB20ED, 0xFB2080, 0x20F6FB];
-    const geometry = new TetrahedronGeometry(0.07);
+    const geometry = new TetrahedronGeometry(0.05);
 
     const particles = new Group();
     for(let i = 0; i < particleCount; i++) {
         const material = new MeshBasicMaterial({ color: colors[i % colors.length] });
         const particle = new Mesh(geometry, material);
 
-        particle.position.set(
-            (Math.random() - 0.5) * 40,
-            (Math.random() - 0.5) * 40,
-            (Math.random() - 0.5) * 40
-        );
+        do {
+            particle.position.set(
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10
+            );
+        } while (Math.abs(particle.position.x) < 2 && Math.abs(particle.position.y) < 2 && Math.abs(particle.position.z) < 2);
 
         particle.rotation.set(
             Math.random() * Math.PI,

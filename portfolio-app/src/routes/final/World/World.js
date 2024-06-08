@@ -3,12 +3,13 @@ import { createScene } from './components/scene.js';
 import { createRenderer } from './systems/renderer.js';
 import { Resizer } from './systems/Resizer.js';
 import { createControls } from './systems/controls.js';
-import { createLights } from './components/lights.js';
+import { createAmbientLight, createDirectionalLight } from './components/lights.js';
 import { createParticles, animateParticles } from './components/particles.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { createCube } from './components/cube.js';
+import { CubeControls } from './components/cubecontrols.js';
 
 let camera;
 let renderer;
@@ -23,11 +24,13 @@ class World {
         container.append(renderer.domElement);
         camera.position.set(4, 4, 5);
         this.controls = createControls(camera, renderer.domElement);
-        this.lights = createLights();
+        this.ambientLight = createAmbientLight();
+        this.directionalLight = createDirectionalLight();
         this.particles = createParticles(1000);
         this.cube = createCube();
+        this.cubeControls = new CubeControls(this.cube);
 
-        scene.add(this.lights, this.particles, this.cube);
+        scene.add(this.ambientLight, this.directionalLight, this.particles, this.cube);
 
         this.composer = new EffectComposer(renderer);
         this.composer.setPixelRatio(window.devicePixelRatio);
@@ -52,6 +55,8 @@ class World {
     }
 
     update() {
+        this.cubeControls.stop(scene, camera);
+        this.cubeControls.reset(scene, camera);
     }
 
     animate() {

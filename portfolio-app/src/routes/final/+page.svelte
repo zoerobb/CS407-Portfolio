@@ -35,9 +35,9 @@
         <a href="/" class="escape" aria-label="Go back"></a>
         {#if showTitle}
             <div class="title">
-                <h1><center>Load Pre-Build #D Model and Use Animation</center></h1>
+                <h1><center>Final Project</center></h1>
                 <hr/>
-                <p>This work is based on "Tarisland - Dragon (High Poly)" (https://sketchfab.com/3d-models/tarisland-dragon-high-poly-ecf63885166c40e2bbbcdf11cd14e65f) by Doctor A. (https://sketchfab.com/doctorA) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)</p>
+                <p>CS407 final project. I chose to create a cube stack game.</p>
             </div>
         {/if}
 
@@ -55,8 +55,7 @@
                 <ul>
                     <li>SPACE: Stop block</li>
                     <li>R: Restart</li>
-                    <li>MOUSE BUTTONS + DRAG: Adjust camera</li>
-                    <li>MOUSE WHEEL: Zoom camera</li>
+                    <li>LEFT CLICK + DRAG: Adjust camera</li>
                 </ul>
             </div>
         {/if}
@@ -79,14 +78,14 @@
         position: absolute;
         top: 0;
         left: 0;
-        background-color: rgba(0, 0, 0, 0.62);
+        background-color: rgba(0, 0, 0, 0.85);
         padding: 20px;
         width: 50%;
         border-radius: 8px;
         color: lightgray;
         z-index: 200;
         margin-left: 25%;
-        margin-top: 5%;
+        margin-top: 11%;
         text-align: center;
     }
 
@@ -98,13 +97,13 @@
         background-size: contain;
         margin-top: 11px;
         margin-left: 12px;
-        filter: invert(39%) sepia(100%) saturate(2000%) hue-rotate(352deg) brightness(80%) contrast(120%);
+        filter: invert(39%) sepia(100%) saturate(2000%) hue-rotate(243deg) brightness(100%) contrast(120%);
         z-index: 100;
     }
 
     .buttons {
-        margin-top: 90px;
-        margin-left: 22px;
+        margin-top: 155px;
+        margin-left: 32px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -114,7 +113,7 @@
     }
 
     .btn {
-        background-color: rgb(44, 44, 44);
+        background-color: rgb(165, 55, 255);
         padding: 20px;
         border: none;
         border-radius: 8px;
@@ -123,10 +122,12 @@
         margin-bottom: 10px;
         width: 120%;
         cursor: pointer;
+        box-shadow: 0 0 8px rgb(198, 55, 255), 0 0 10px rgb(49, 6, 129);
     }
 
     .btn:hover, .btn:focus, .btn:active {
-        background-color: rgb(31, 31, 31);
+        background-color: rgb(110, 28, 218);
+        box-shadow: 0 0 8px rgb(142, 55, 255), 0 0 10px rgb(49, 6, 129);
     }
     
     .assignment-2-body {
