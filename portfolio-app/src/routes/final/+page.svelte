@@ -12,6 +12,7 @@
     let gameWon = false;
     let gameOver = false;
     let gameStarted = false;
+    let score = 0;
 
     function toggleDiv(div) {
         if (div === 'title') showTitle = !showTitle;
@@ -37,6 +38,9 @@
         });
         window.addEventListener('gameStarted', (event) => {
             gameStarted = event.detail;
+        });
+        window.addEventListener('score', (event) => {
+            score = event.detail;
         });
     });
 
@@ -95,6 +99,7 @@
         {/if}
 
             <div class="buttons">
+                <p class="score">SCORE: {score}/15</p>
                 <button id="information" class="btn btn-primary"on:click={() => toggleDiv('title')}>Information</button>
                 <button id="requirements" class="btn btn-primary"on:click={() => toggleDiv('requirements')}>Requirements</button>
                 <button id="controls" class="btn btn-primary"on:click={() => toggleDiv('controls')}>Controls</button>
@@ -158,6 +163,11 @@
         z-index: 100;
         width: 7%;
         height: 40%;
+    }
+
+    .score {
+        color: white;
+        z-index: 100;
     }
 
     .btn {

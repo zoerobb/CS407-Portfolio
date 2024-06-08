@@ -17,6 +17,7 @@ let scene;
 let gameWon = false;
 let gameOver = false;
 let gameStarted = false;
+let score = 0;
 
 class World {
     constructor(container, canvasWidth, canvasHeight) {
@@ -58,6 +59,7 @@ class World {
         gameWon = this.cubeControls.gameWon;
         gameOver = this.cubeControls.gameOver;
         gameStarted = this.cubeControls.gameStarted;
+        score = this.cubeControls.listSize();
 
         if(gameWon) {
             const event = new CustomEvent('gameWon', { detail: gameWon });
@@ -85,6 +87,9 @@ class World {
             const event = new CustomEvent('gameStarted', { detail: gameStarted });
             window.dispatchEvent(event);
         }
+
+        const event = new CustomEvent('score', { detail: score });
+        window.dispatchEvent(event);
 
     }
 
