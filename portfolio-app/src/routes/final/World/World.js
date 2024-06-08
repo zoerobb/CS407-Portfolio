@@ -14,7 +14,9 @@ import { CubeControls } from './components/cubecontrols.js';
 let camera;
 let renderer;
 let scene;
-
+let gameWon = false;
+let gameOver = false;
+let gameStarted = false;
 
 class World {
     constructor(container, canvasWidth, canvasHeight) {
@@ -22,13 +24,13 @@ class World {
         scene = createScene();
         renderer = createRenderer();
         container.append(renderer.domElement);
-        camera.position.set(4, 4, 5);
         this.controls = createControls(camera, renderer.domElement);
         this.ambientLight = createAmbientLight();
         this.directionalLight = createDirectionalLight();
         this.particles = createParticles(1000);
         this.cube = createCube();
         this.cubeControls = new CubeControls(this.cube);
+        camera.position.set(0, 0, 10);
 
         scene.add(this.ambientLight, this.directionalLight, this.particles, this.cube);
 
@@ -47,16 +49,43 @@ class World {
         const resizer = new Resizer(container, camera, renderer);
     }
 
-    async init() {
-    }
-    
     render() {
         this.composer.render();
     }
 
     update() {
-        this.cubeControls.stop(scene, camera);
-        this.cubeControls.reset(scene, camera);
+        this.cubeControls.update(scene, camera);
+        gameWon = this.cubeControls.gameWon;
+        gameOver = this.cubeControls.gameOver;
+        gameStarted = this.cubeControls.gameStarted;
+
+        if(gameWon) {
+            const event = new CustomEvent('gameWon', { detail: gameWon });
+            window.dispatchEvent(event);
+        }
+        else {
+            const event = new CustomEvent('gameWon', { detail: gameWon });
+            window.dispatchEvent(event);
+        }
+
+        if(gameOver) {
+            const event = new CustomEvent('gameOver', { detail: gameOver });
+            window.dispatchEvent(event);
+        }
+        else {
+            const event = new CustomEvent('gameOver', { detail: gameOver });
+            window.dispatchEvent(event);
+        }
+
+        if(gameStarted) {
+            const event = new CustomEvent('gameStarted', { detail: gameStarted });
+            window.dispatchEvent(event);
+        }
+        else {
+            const event = new CustomEvent('gameStarted', { detail: gameStarted });
+            window.dispatchEvent(event);
+        }
+
     }
 
     animate() {

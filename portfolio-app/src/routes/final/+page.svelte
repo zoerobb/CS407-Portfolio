@@ -9,6 +9,9 @@
     let showTitle = false;
     let showRequirements = false;
     let showControls = false;
+    let gameWon = false;
+    let gameOver = false;
+    let gameStarted = false;
 
     function toggleDiv(div) {
         if (div === 'title') showTitle = !showTitle;
@@ -23,9 +26,18 @@
         let height = rect.height;
         world = new World(container, width, height);
 
-        await world.init();
         world.render();
         world.animate();
+
+        window.addEventListener('gameWon', (event) => {
+            gameWon = event.detail;
+        });
+        window.addEventListener('gameOver', (event) => {
+            gameOver = event.detail;
+        });
+        window.addEventListener('gameStarted', (event) => {
+            gameStarted = event.detail;
+        });
     });
 
     </script>
@@ -38,6 +50,12 @@
                 <h1><center>Final Project</center></h1>
                 <hr/>
                 <p>CS407 final project. I chose to create a cube stack game.</p>
+            </div>
+        {/if}
+
+        {#if !gameStarted}
+            <div class="start">
+                <p>Press space to start the game</p>
             </div>
         {/if}
 
@@ -60,6 +78,22 @@
             </div>
         {/if}
 
+        {#if gameOver}
+            <div class="game-over">
+                <h1>Game Over 😭😭😭😭</h1>
+                <p><img src="https://pbs.twimg.com/media/F6ILlHFbMAEmlpt.jpg" /></p>
+                <p>Press R to restart.</p>
+            </div>
+        {/if}
+
+        {#if gameWon}
+            <div class="game-won">
+                <h1>GAME WON YIPPEE 🎉🎉🎉🎉</h1>
+                <p><img src="https://upload.wikimedia.org/wikipedia/en/9/94/Autism_Creature.webp" /></p>
+                <p>Press R to restart.</p>
+            </div>
+        {/if}
+
             <div class="buttons">
                 <button id="information" class="btn btn-primary"on:click={() => toggleDiv('title')}>Information</button>
                 <button id="requirements" class="btn btn-primary"on:click={() => toggleDiv('requirements')}>Requirements</button>
@@ -74,7 +108,7 @@
         list-style-type: none;
     }
 
-    .title, .requirements, .controls {
+    .title, .requirements, .controls, .game-won, .game-over{
         position: absolute;
         top: 0;
         left: 0;
@@ -86,6 +120,20 @@
         z-index: 200;
         margin-left: 25%;
         margin-top: 11%;
+        text-align: center;
+    }
+
+    .start {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 20px;
+        width: 50%;
+        border-radius: 8px;
+        color: lightgray;
+        z-index: 200;
+        margin-left: 24%;
+        margin-top: 19%;
         text-align: center;
     }
 

@@ -4,7 +4,7 @@ import { MeshBasicMaterial } from "three";
 import { Group } from "three";
 
 function createParticles() {
-    const particleCount = 1000;
+    const particleCount = 2000;
     const colors = [0x25C7FF, 0x2820FB, 0x9B20FB, 0xFB20ED, 0xFB2080, 0x20F6FB];
     const geometry = new TetrahedronGeometry(0.05);
 
@@ -15,9 +15,9 @@ function createParticles() {
 
         do {
             particle.position.set(
-                (Math.random() - 0.5) * 10,
-                (Math.random() - 0.5) * 10,
-                (Math.random() - 0.5) * 10
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.5) * 20
             );
         } while (Math.abs(particle.position.x) < 2 && Math.abs(particle.position.y) < 2 && Math.abs(particle.position.z) < 2);
 
