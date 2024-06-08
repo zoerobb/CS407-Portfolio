@@ -17,7 +17,11 @@
     }
     
     onMount(async () => {
-        world = new World(container);
+        let scene = document.querySelector('.scene');
+        let rect = scene.getBoundingClientRect();
+        let width = rect.width;
+        let height = rect.height;
+        world = new World(container, width, height);
 
         await world.init();
         world.render();
@@ -40,13 +44,7 @@
 
         {#if showRequirements}
             <div class="requirements">
-                <p>The goal of this assignment is to learn about pre-made models and animations.</p>
-                <p>Requirements are:</p>
-                <ul>
-                    <li>Load a pre-made model from a GLTF file, that contains one or more geometries with materials and animation clips</li>
-                    <li>Use the three.js animation system</li>
-                    <li>Exercise both of these with some form of interactive controls</li>
-                </ul>
+                <p>"Create something you find interesting or fun, and show it to us at the regularly scheduled Final Exam time.We don't have as much time as I had hoped so this isn't expected to be some grand project, but you should still try to do something new.  A game, a new shading effect, new interaction, new models, new effects, ... You get the picture."</p>
             </div>
         {/if}
 
@@ -55,8 +53,8 @@
                 <p>Controls</p>
                 <hr/>
                 <ul>
-                    <li>A, D: Turn left and right</li>
-                    <li>K: Die</li>
+                    <li>SPACE: Stop block</li>
+                    <li>R: Restart</li>
                     <li>MOUSE BUTTONS + DRAG: Adjust camera</li>
                     <li>MOUSE WHEEL: Zoom camera</li>
                 </ul>

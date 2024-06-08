@@ -3,12 +3,12 @@ import { createScene } from './components/scene.js';
 import { createRenderer } from './systems/renderer.js';
 import { Resizer } from './systems/Resizer.js';
 import { createControls } from './systems/controls.js';
-import { loadDragon } from './components/dragon/dragon.js';
-import { CharacterControls } from './components/dragon/charactercontrols.js';
-import { Vector3 } from 'three';
 import { createLights } from './components/lights.js';
-import { createFloor } from './components/floor.js';
-import { Clock } from 'three';
+import { createParticles, animateParticles } from './components/particles.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { createCube } from './components/cube.js';
 
 let camera;
 let renderer;
@@ -16,49 +16,47 @@ let scene;
 
 
 class World {
-    constructor(container) {
-        this.dragon = null;
-        this.animations = null;
-        this.characterControls = null;
+    constructor(container, canvasWidth, canvasHeight) {
         camera = createCamera();
         scene = createScene();
         renderer = createRenderer();
         container.append(renderer.domElement);
-        camera.position.set(20, 10, 22);
-        this.clock = new Clock();
+        camera.position.set(4, 4, 5);
         this.controls = createControls(camera, renderer.domElement);
         this.lights = createLights();
-        const { floor, grid } = createFloor();
+        this.particles = createParticles(1000);
+        this.cube = createCube();
 
-        scene.add(this.lights, floor, grid);
+        scene.add(this.lights, this.particles, this.cube);
+
+        this.composer = new EffectComposer(renderer);
+        this.composer.setPixelRatio(window.devicePixelRatio);
+        this.composer.setSize(canvasWidth, canvasHeight);
+        this.renderPass = new RenderPass(scene, camera);
+        this.composer.addPass(this.renderPass);
+
+        this.bloomPass = new UnrealBloomPass();
+        this.bloomPass.threshold = 0;
+        this.bloomPass.strength = 0.8;
+        this.bloomPass.radius = 0.8;
+        this.composer.addPass(this.bloomPass);
 
         const resizer = new Resizer(container, camera, renderer);
-        this.characterControls = null;
     }
 
     async init() {
-        const { dragon, animations } = await loadDragon();
-        this.dragon = dragon;
-        this.animations = animations;
-        scene.add(dragon);
-
-        this.characterControls = new CharacterControls(this.dragon, this.animations);
-        this.characterControls.idle();
     }
     
     render() {
-        renderer.render(scene, camera);
+        this.composer.render();
     }
 
     update() {
-        const delta = this.clock.getDelta();
-        if (this.characterControls) {
-            this.characterControls.update(delta);
-        }
     }
 
     animate() {
         requestAnimationFrame(() => this.animate());
+        animateParticles(this.particles);
         this.update();
         this.controls.update();
         this.render();
