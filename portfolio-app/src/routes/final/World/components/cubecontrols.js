@@ -11,7 +11,7 @@ class CubeControls {
         this.cubehsl = this.color.getHSL({ h: 0, s: 0, l: 0 })
         this.hue = this.cubehsl.h;
         this.direction = 1;
-        this.speed = 0.04;
+        this.speed = 0.03;
         this.moveAmount = 2;
 
         this.keys = {
@@ -42,7 +42,7 @@ class CubeControls {
     }
 
     stop(scene, camera) {
-        if(this.keys.SPACE && this.cubes.length < 15) {
+        if(this.keys.SPACE && this.cubes.length < 16) {
             //Game started?
             if(this.gameStarted == undefined) {
                 this.gameStarted = true;
@@ -64,7 +64,7 @@ class CubeControls {
             const newCube = this.createCubeAbove(lastCube, lastCube.geometry.parameters.width);
             this.cubes.push(newCube);
             //If the player has reached the last cube, they win
-            if (this.cubes.length === 15) {
+            if (this.cubes.length === 16) {
                 this.gameWon = true;
                 return;
             }
