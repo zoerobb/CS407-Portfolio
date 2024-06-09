@@ -8,14 +8,44 @@
     let container;
     let world;
     let background;
-    let isAnimating = false;
     let isWireframe = false;
-    let vertex = `\nvoid main() {
-    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-}\n`;
-    let fragment = `\nvoid main() {
-    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0 );
-}\n`;
+    let vertex = `
+uniform float time;
+varying vec3 vNormal;
+out float hemisphere;
+
+void main() {
+    vec3 newPosition = position;
+    newPosition.x += 0.1 * sin(2.0 * 3.1415926 * (position.y + time));
+    newPosition.y += 0.1 * sin(2.0 * 3.1415926 * (position.x + time));
+    vNormal = normalize(newPosition);
+    hemisphere = smoothstep(-2.0,2.0,position.y);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+}
+`;
+
+let fragment = `
+uniform vec3 objColor;
+uniform vec3 invColor;
+in vec3 vNormal;
+in float hemisphere;
+
+void main() {
+    vec3 objColor = vec3(1.0, 0.75, 0.5);
+    vec3 invColor = vec3(1.0, 0.71, 0.76);
+    vec3 ambientLight = vec3(0.1, 0.3, 0.3);
+    vec3 lightDirection = vec3(1.0, 0.0, 0.0);
+    vec3 lightColor = vec3(1.0, 0.5, 0.0);
+    float directionalLight = max(dot(vNormal, lightDirection), 0.0);
+    vec3 color = mix(objColor, invColor, 1.0 - hemisphere);
+    color += ambientLight * 0.1;
+    color += lightColor * 0.3 * directionalLight; 
+    gl_FragColor = vec4(color, 1.0);
+}
+`;
+
+
+
     
     onMount(() => {
         world = new World(container);

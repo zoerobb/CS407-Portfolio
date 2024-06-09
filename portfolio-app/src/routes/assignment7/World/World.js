@@ -7,6 +7,7 @@ import { Resizer } from './systems/Resizer.js';
 import { AxesHelper } from 'three';
 import { createSphere } from './components/sphere.js';
 import { ShaderMaterial } from 'three';
+import { createControls } from './systems/controls.js';
 
 let camera;
 let renderer;
@@ -24,10 +25,14 @@ class World {
 
         this.ambientLight = createAmbientLight();
         this.directionalLight = createDirectionalLight();
-        this.sphere = createSphere();
+        this.shaderSphere = createSphere();
+        this.normalSphere = createSphere();
+        this.shaderSphere.position.set(-3, 0, 0);
+        this.normalSphere.position.set(3, 0, 0);
+        this.controls = createControls(camera, renderer.domElement);
 
         const axesHelper = new AxesHelper(5);
-        scene.add(axesHelper, this.ambientLight, this.directionalLight, this.sphere);
+        scene.add(axesHelper, this.ambientLight, this.directionalLight, this.shaderSphere, this.normalSphere);
 
         const resizer = new Resizer(container, camera, renderer);
     }
@@ -38,11 +43,16 @@ class World {
 
     animate() {
         requestAnimationFrame(() => this.animate());
+        this.controls.update();
+        this.shaderSphere.material.uniforms.time.value = performance.now() / 1000;
+        this.normalSphere.position.y = Math.sin(performance.now() / 300) * 2;
         renderer.render(scene, camera);
+
     }
     toggleWireframe() {
         isWireframe = !isWireframe;
-        this.sphere.material.wireframe = isWireframe;
+        this.shaderSphere.material.wireframe = isWireframe;
+        this.normalSphere.material.wireframe = isWireframe;
         renderer.render(scene, camera);
     }
 
@@ -53,7 +63,10 @@ class World {
                 return;
             }
         try {
-            this.sphere.material = new ShaderMaterial({
+            this.shaderSphere.material = new ShaderMaterial({
+                uniforms: {
+                    time: { value: 0.0 }
+                },
                 vertexShader,
                 fragmentShader,
             });
