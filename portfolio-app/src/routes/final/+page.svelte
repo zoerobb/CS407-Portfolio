@@ -54,6 +54,7 @@
                 <h1><center>Final Project</center></h1>
                 <hr/>
                 <p>CS407 final project. I chose to create a cube stack game.</p>
+                <p>Refresh the page if you clicked out to reset everything</p>
             </div>
         {/if}
 

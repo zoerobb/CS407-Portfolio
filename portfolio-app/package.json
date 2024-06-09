@@ -16,12 +16,16 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@codemirror/lang-javascript": "^6.2.2",
+		"@codemirror/theme-one-dark": "^6.1.2",
 		"@react-three/fiber": "^8.16.8",
 		"a-color-picker": "^1.2.1",
 		"bootstrap": "^5.3.3",
 		"bootstrap-icons": "^1.11.3",
+		"codemirror": "^6.0.1",
 		"nouislider": "^15.7.1",
 		"simple-color-picker": "^1.0.5",
+		"svelte-codemirror-editor": "^1.4.0",
 		"three": "^0.163.0",
 		"wnumb": "^1.2.0"
 	}
