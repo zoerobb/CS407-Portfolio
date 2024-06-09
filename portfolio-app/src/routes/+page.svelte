@@ -8,6 +8,8 @@
 <div class="home-body">
     <div class="jumbotron mt-5">
         <h1 class="display-4"><center>CS 407 Assignments</center></h1>
+        <p class="display-6"><center>About</center></p>
+        <p class="lead"><center>Hi, my name is Zoe Robb! I'm a senior at Western Oregon University, and this is my collection of assignments throughout the CS407 class. You can also access my github repository with the link below.</center></p>
         <p class="lead"><center><a class="github" href="https://github.com/zoerobb/CS407-Portfolio"> <i class="fa fa-github" aria-hidden="true"></i> GitHub</a></center></p>
         <hr>
     </div>
