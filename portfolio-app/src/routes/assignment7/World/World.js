@@ -44,7 +44,9 @@ class World {
     animate() {
         requestAnimationFrame(() => this.animate());
         this.controls.update();
-        this.shaderSphere.material.uniforms.time.value = performance.now() / 1000;
+        if (this.shaderSphere && this.shaderSphere.material && this.shaderSphere.material.uniforms) {
+            this.shaderSphere.material.uniforms.time.value = performance.now() / 1000;
+        }
         this.normalSphere.position.y = Math.sin(performance.now() / 300) * 2;
         renderer.render(scene, camera);
 

@@ -94,6 +94,7 @@ void main() {
 
             <article> 
                 <center><button id="compile-btn" class="btns" on:click={compileShaders}>Compile</button></center>
+                <center><p>Move camera with mouse click + drag</p></center>
             </article>
             
             <div class="row">
